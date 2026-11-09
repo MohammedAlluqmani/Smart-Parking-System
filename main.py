@@ -5,7 +5,7 @@ from datetime import datetime
 
 model = YOLO(r"C:\Users\asus\Desktop\parking spot project\my_model.pt")
 
-image_path = (r"C:\Users\asus\Desktop\parking spot project\IMG_4676.png")
+image_path = (r"C:\Users\asus\Desktop\parking spot project\car3.png")
 frame = cv2.imread(image_path)
 
 if frame is None:
