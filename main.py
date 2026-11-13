@@ -5,7 +5,7 @@ from datetime import datetime
 
 model = YOLO(r"C:\Users\asus\Desktop\parking spot project\my_model.pt")
 
-image_path = (r"C:\Users\asus\Desktop\parking spot project\car3.png")
+image_path = (r"C:\Users\asus\Desktop\parking spot project\car4.png")
 frame = cv2.imread(image_path)
 
 if frame is None:
@@ -37,3 +37,7 @@ else:
     
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
+
+
+    
