@@ -132,3 +132,17 @@ Detected Text: Mat), Timestamp: 2026-11-13 17:32:41
 Detected Text: 8 $ >, Timestamp: 2026-11-13 17:32:41
 Detected Text: 7 8 2 1, Timestamp: 2026-11-13 17:32:41
 Detected Text: EK R, Timestamp: 2026-11-13 17:32:41
+Car: 1, Plate: 50٤ 6978, Time: 2026-11-14 06:16:37
+Car: 1, Plate: رع ٧٨٢١ 7821 EKR, Time: 2026-11-14 06:22:07
+Car: 1, Plate: 50٤ 6978, Time: 2026-11-14 06:25:50
+Car: 1, Plate: 50٤ 6978, Time: 2026-11-14 06:31:02
+Car: 1, Plate: ٢٨٢ راع 782 1 ٤KR, Time: 2026-11-14 06:39:11
+Car: 1, Plate: 50٤ 6978, Time: 2026-11-14 06:39:52
+Car: 1, Plate: 7821EKRE, Time: 2026-11-14 06:40:45
+Car: 1, Plate: 7821EKRE, Time: 2026-11-14 06:41:13
+Car: 1, Plate: 7821EKRE, Time: 2026-11-14 06:41:30
+Car: 1, Plate: 50z 6978, Time: 2026-11-14 06:41:46
+Car: 1, Plate: 50z 6978, Time: 2026-11-14 06:42:13
+Car: 1, Plate: 50z 6978, Time: 2026-11-14 06:43:24
+Car: 3, Plate: [101 97902, Time: 2026-11-14 08:31:38
+Car: 1, Plate: 50z 6978, Time: 2026-11-14 08:35:53
