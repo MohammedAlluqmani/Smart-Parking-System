@@ -10,7 +10,7 @@ car_model = YOLO("yolov8n.pt")
 plate_model = YOLO(path + r"\my_model.pt")
 reader = easyocr.Reader(['en'])
 
-frame = cv2.imread(r"C:\Users\asus\Desktop\parking spot project\Screenshot 2026-11-14 082716.png")
+frame = cv2.imread(r"C:\Users\asus\Desktop\parking spot project\Screenshot_2026-11-13_152525.png")
 
 if frame is None:
     print("Error: Image not found")
@@ -65,6 +65,7 @@ for result in slot_results:
                     cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
 
 plate_file = path + r"\car_plate_data.txt"
+recognized_plates = []
 
 for car_index, (cx1, cy1, cx2, cy2) in enumerate(car_boxes):
 
@@ -99,6 +100,8 @@ for car_index, (cx1, cy1, cx2, cy2) in enumerate(car_boxes):
             cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 255), 2)
 
             if plate_text:
+                recognized_plates.append(plate_text)
+
                 current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
                 print(f"Car {car_index + 1}: {plate_text}")
@@ -111,15 +114,58 @@ for car_index, (cx1, cy1, cx2, cy2) in enumerate(car_boxes):
 
 total_slots = occupied_count + empty_count
 
-cv2.rectangle(frame, (10, 10), (320, 125), (30, 30, 30), -1)
+actual_total_slots = 2
+actual_occupied = 1
+actual_empty = 1
+actual_cars = 2
+actual_plates = ["50z6978"]
 
-for y, label, value, color in [
-    (35, "Total Slots", total_slots, (255, 255, 255)),
-    (70, "Occupied", occupied_count, (0, 0, 255)),
-    (105, "Empty", empty_count, (0, 255, 0))
-]:
-    cv2.putText(frame, f"{label}: {value}", (20, y),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
+def normalize_plate(text):
+    return "".join(c.lower() for c in text if c.isalnum())
+
+parking_checks = [
+    total_slots == actual_total_slots,
+    occupied_count == actual_occupied,
+    empty_count == actual_empty
+]
+
+parking_accuracy = sum(parking_checks) / len(parking_checks) * 100
+
+car_accuracy = (
+    100 if len(car_boxes) == actual_cars else 0
+)
+
+detected_plates = [
+    normalize_plate(plate) for plate in recognized_plates
+]
+
+correct_plates = sum(
+    1 for plate in actual_plates
+    if normalize_plate(plate) in detected_plates
+)
+
+plate_accuracy = correct_plates / len(actual_plates) * 100
+
+overall_accuracy = (
+    parking_accuracy + car_accuracy + plate_accuracy
+) / 3
+
+cv2.rectangle(frame, (10, 10), (420, 350), (30, 30, 30), -1)
+
+results_text = [
+    f"Total Slots: {total_slots}",
+    f"Occupied: {occupied_count}",
+    f"Empty: {empty_count}",
+    f"Detected Cars: {len(car_boxes)}",
+    f"Parking Accuracy: {parking_accuracy:.1f}%",
+    f"Car Accuracy: {car_accuracy:.1f}%",
+    f"Plate Accuracy: {plate_accuracy:.1f}%",
+    f"Overall Accuracy: {overall_accuracy:.1f}%"
+]
+
+for i, text in enumerate(results_text):
+    cv2.putText(frame, text, (20, 35 + i * 35),
+                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
 
 height, width = frame.shape[:2]
 scale = min(960 / width, 540 / height)
@@ -131,6 +177,13 @@ print(f"Total Slots: {total_slots}")
 print(f"Occupied: {occupied_count}")
 print(f"Empty: {empty_count}")
 print(f"Detected Cars: {len(car_boxes)}")
+
+print("\nMODEL ACCURACY")
+print("--------------------")
+print(f"Parking Accuracy: {parking_accuracy:.2f}%")
+print(f"Car Accuracy: {car_accuracy:.2f}%")
+print(f"Plate Accuracy: {plate_accuracy:.2f}%")
+print(f"Overall Accuracy: {overall_accuracy:.2f}%")
 
 cv2.namedWindow("Smart Parking System", cv2.WINDOW_NORMAL)
 cv2.imshow("Smart Parking System", display_frame)
